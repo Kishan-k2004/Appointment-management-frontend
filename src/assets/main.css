@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+@plugin 'daisyui' {
+  themes: false;
+}
+
+/* Custom light theme: neutral surfaces, indigo accent, soft radii. */
+@plugin 'daisyui/theme' {
+  name: 'appointments';
+  default: true;
+  color-scheme: light;
+
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98.4% 0.003 247.858);
+  --color-base-300: oklch(92.9% 0.013 255.508);
+  --color-base-content: oklch(27.9% 0.041 260.031);
+  --color-primary: oklch(51.1% 0.262 276.966);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(55.4% 0.046 257.417);
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: oklch(60% 0.118 184.704);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(27.9% 0.041 260.031);
+  --color-neutral-content: oklch(98.4% 0.003 247.858);
+  --color-info: oklch(58.8% 0.158 241.966);
+  --color-info-content: oklch(100% 0 0);
+  --color-success: oklch(59.6% 0.145 163.225);
+  --color-success-content: oklch(100% 0 0);
+  --color-warning: oklch(76.9% 0.188 70.08);
+  --color-warning-content: oklch(27.9% 0.077 45.635);
+  --color-error: oklch(57.7% 0.245 27.325);
+  --color-error-content: oklch(100% 0 0);
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.875rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+:root,
+body {
+  @apply bg-base-200 text-base-content antialiased;
+}
+
+/* Status colour tokens shared by badges, calendar chips and dots. */
+.status-pending {
+  --status-bg: var(--color-amber-50);
+  --status-border: var(--color-amber-300);
+  --status-text: var(--color-amber-800);
+  --status-dot: var(--color-amber-500);
+}
+.status-confirmed {
+  --status-bg: var(--color-emerald-50);
+  --status-border: var(--color-emerald-300);
+  --status-text: var(--color-emerald-800);
+  --status-dot: var(--color-emerald-500);
+}
+.status-cancelled {
+  --status-bg: var(--color-rose-50);
+  --status-border: var(--color-rose-300);
+  --status-text: var(--color-rose-800);
+  --status-dot: var(--color-rose-500);
+}
+
+.card-surface {
+  @apply rounded-box border border-base-300 bg-base-100 shadow-[0_1px_2px_rgb(15_23_42/0.04)];
+}
