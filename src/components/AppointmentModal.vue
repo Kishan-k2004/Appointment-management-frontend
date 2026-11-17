@@ -61,7 +61,13 @@ watch(
   { immediate: true }
 );
 
-/** Mirrors the backend validators so most problems are caught before a request. */
+// Unicode-aware so names like "José", "Zoë" or "प्रिया" are accepted.
+const HAS_LETTER = /\p{L}/u;
+const HAS_DIGIT = /\p{N}/u;
+// Letters (incl. accents/combining marks), spaces and the punctuation real names use.
+const NAME_ALLOWED = /^[\p{L}\p{M}\s.'’-]+$/u;
+
+/** Mirrors the backend validators (plus name rules) so problems are caught before a request. */
 function validateField(field) {
   const value = typeof values[field] === 'string' ? values[field].trim() : values[field];
   let message = '';
@@ -70,6 +76,10 @@ function validateField(field) {
     if (!value) message = `${label} is required.`;
     else if (value.length < 2) message = `${label} must be at least 2 characters.`;
     else if (value.length > 100) message = `${label} must be at most 100 characters.`;
+    else if (!HAS_LETTER.test(value)) message = `${label} must contain letters, not only numbers or special characters.`;
+    else if (field === 'customerName' && HAS_DIGIT.test(value)) message = 'Customer name cannot contain numbers.';
+    else if (field === 'customerName' && !NAME_ALLOWED.test(value))
+      message = "Customer name can only contain letters, spaces, apostrophes ('), hyphens (-) and periods (.).";
   } else if (field === 'date') {
     if (!value) message = 'Date is required.';
     else if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || Number.isNaN(new Date(`${value}T00:00`).getTime()))
